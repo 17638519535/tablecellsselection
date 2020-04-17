@@ -343,6 +343,7 @@
                 $table.on('copy',onCopy);
 
                 function onCopy(e){
+                    console.log(handler);
                     e.originalEvent.clipboardData.setData('text/plain', handler.getSelectedDataAsText());
                     e.preventDefault(); // We want our data, not data from any selection, to be written to the clipboard
                     //var handler = $(e.target).csHandler;
@@ -474,7 +475,7 @@
     }
 
 	function getSelectedDataAsText($table) {
-		//console.log('getSelectedDataAsText');
+		console.log('getSelectedDataAsText');
         var selectedCells = getSelectedCells($table);//выделенные ячейки
         var selectedRows = selectedCells.closest('tr');//строки с выделенными ячейками
 

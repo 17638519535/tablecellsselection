@@ -12,9 +12,9 @@
 	user-select: none !important;
 }
 .tcs tr::selection,
-.tcs td:not(.tcs-selection-enabled) > *::selection,
+/*.tcs td:not(.tcs-selection-enabled) > *::selection,*/
 .tcs th:not(.tcs-selection-enabled) > *::selection,
-.tcs td:not(.tcs-selection-enabled)::selection,
+/*.tcs td:not(.tcs-selection-enabled)::selection,*/
 .tcs th:not(.tcs-selection-enabled)::selection,
 .tcs br::selection{
 	background-color: transparent;
