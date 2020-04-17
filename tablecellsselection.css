@@ -3,8 +3,9 @@
 }
 .tcs td:not(.tcs-selection-enabled) > *,
 .tcs th:not(.tcs-selection-enabled) > *,
-.tcs td:not(.tcs-selection-enabled),
-.tcs th:not(.tcs-selection-enabled){
+.tcs td:not(.tcs-selection-enabled)
+, .tcs th:not(.tcs-selection-enabled)
+{
 	-webkit-user-select: none !important;
 	-khtml-user-select: none !important;
 	-moz-user-select: none !important;
@@ -13,9 +14,9 @@
 }
 .tcs tr::selection,
 /*.tcs td:not(.tcs-selection-enabled) > *::selection,*/
-.tcs th:not(.tcs-selection-enabled) > *::selection,
+/*.tcs th:not(.tcs-selection-enabled) > *::selection,*/
 /*.tcs td:not(.tcs-selection-enabled)::selection,*/
-.tcs th:not(.tcs-selection-enabled)::selection,
+/*.tcs th:not(.tcs-selection-enabled)::selection,*/
 .tcs br::selection{
 	background-color: transparent;
 }
