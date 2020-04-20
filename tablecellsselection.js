@@ -292,12 +292,12 @@
                     data.selFrom.$el = $cell;
 
                     var selectedCellClass = settings.selectedCellClass;
-                    if ($cell.hasClass(selectedCellClass) && deselectAll($table) === 1) {
-                        $cell.removeClass(selectedCellClass);
-                    } else {
-                        deselectAll($table);
-                        $cell.addClass(selectedCellClass);
-                    }
+                    // if ($cell.hasClass(selectedCellClass) && deselectAll($table) === 1) {
+                    //     $cell.removeClass(selectedCellClass);
+                    // } else {
+                    //     deselectAll($table);
+                    //     $cell.addClass(selectedCellClass);
+                    // }
 
                     data.$pointX1 = $cell.offset().left;
                     data.$pointX1width = $cell.offset().left+$cell.width();
@@ -527,7 +527,7 @@
 	}*/
 
     function selectCells($table, data) {
-        deselectAll($table);
+        // deselectAll($table);
 
         getTableCells($table).each(function (key, cell) {
             data.$elemX = $(cell).offset().left;

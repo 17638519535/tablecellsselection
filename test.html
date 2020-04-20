@@ -20,7 +20,7 @@
 
 
 
-    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <script src="jquery-2.1.4.min.js"></script>
 
     <script src="tablecellsselection.js"></script>
     <link rel="stylesheet" href="tablecellsselection.css">
@@ -71,146 +71,169 @@
         <tbody>
         <tr>
             <th>A</th>
-            <td id="test">$10</td>
-            <td>$20</td>
-            <td>$30</td>
-            <td>$40</td>
-            <td>$50</td>
-            <td>$60</td>
+            <td >$1</td>
+            <td>$2</td>
+            <td>$3</td>
+            <td>$4</td>
+            <td>$5</td>
+            <td>$6</td>
         </tr>
         <tr>
             <th>B</th>
+            <td>$7</td>
+            <td >$8</td>
+            <td>$9</td>
             <td>$10</td>
-            <td >$20</td>
-            <td>$30</td>
-            <td>$40</td>
-            <td>$50</td>
-            <td>$60</td>
+            <td>$11</td>
+            <td>$12</td>
 
         </tr>
         <tr>
             <th>C</th>
-            <td>$10</td>
-            <td >$30</td>
-            <td>$60</td>
-            <td>$60</td>
-            <td>$60</td>
-            <td>$60</td>
+            <td>$13</td>
+            <td >$14</td>
+            <td>$15</td>
+            <td>$16</td>
+            <td>$17</td>
+            <td>$18</td>
         </tr>
         <tr>
             <th>D</th>
-            <td>$10</td>
-            <td>$30</td>
-            <td>$40</td>
-            <td>$50</td>
-            <td>$60</td>
-            <td>$60</td>
+            <td>$19</td>
+            <td>$20</td>
+            <td>$21</td>
+            <td>$22</td>
+            <td>$23</td>
+            <td>$24</td>
         </tr>
         <tr>
             <th>E</th>
-            <td>$10</td>
-            <td>$20</td>
+            <td>$25</td>
+            <td>$26</td>
+            <td>$27</td>
+            <td>$28</td>
+            <td>$29</td>
             <td>$30</td>
-            <td>$40</td>
-            <td>$50</td>
-            <td>$60</td>
         </tr>
         <tr>
             <th>F</th>
-            <td>$10</td>
-            <td>$20</td>
-            <td>$30</td>
-            <td>$40</td>
-            <td>$50</td>
-            <td>$60</td>
+            <td>$31</td>
+            <td>$32</td>
+            <td>$33</td>
+            <td>$34</td>
+            <td>$35</td>
+            <td>$36</td>
         </tr>
         </tbody>
     </table>
 
 </div>
+    <h1><input id="commit" type="button" value="确定"/> </h1>
 
-    <div class="col-md-12">
-        <h4> 你所选结果是
-            <p id="data"> </p>
+
+    <div >
+        <h4 id="data">
+            <p > 你所选结果是</p>
         </h4>
-    <!-- Place this tag where you want the button to render. -->
-    <a class="github-button" href="https://github.com/likemusic/tablecellsselection" data-style="mega" data-count-href="/likemusic/tablecellsselection/stargazers" data-count-api="/repos/likemusic/tablecellsselection#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star likemusic/tablecellsselection on GitHub">Star</a>
+    <!--<a class="github-button" href="https://github.com/likemusic/tablecellsselection" data-style="mega" data-count-href="/likemusic/tablecellsselection/stargazers" data-count-api="/repos/likemusic/tablecellsselection#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star likemusic/tablecellsselection on GitHub">Star</a>-->
     </div>
 
 <script>
     jQuery(document).ready(function ($) {
         $('#tablecellsselection').tableCellsSelection();
+        $(document).bind("contextmenu",function(e){
+            return false;
+        });
     });
 
+    var TimeFn = null;
+    var TimeCtrl = null;
+    var TimeCtrl1 = null;
     var data =[];
 
-    //点击左键松开事件
-    $("td").mouseup(function(){
+    //确认提交
+    $("#commit").click(function () {
+             data =[];
+        $("#tablecellsselection").find("td").each(function () {
+            if ($(this).css('background-color') === "rgba(51, 122, 183, 0.2)") {
 
-        //获取table的行和列
-        var td = event.srcElement; // 通过event.srcElement 获取激活事件的对象 td
-        console.log("行号：" + (td.parentElement.rowIndex) + "，列号：" + td.cellIndex);
-        var selectedCells =  $('#tablecellsselection').tableCellsSelection('selectedCells');
-        console.log('value是：'+selectedCells[0].innerText+' 列数 : '+selectedCells[0].cellIndex
-            +'   行数：');
-        if(selectedCells.length > 1){
-            for (var i=0;i<selectedCells.length;i++){
-                data.push('value： '+selectedCells[0].innerText+'  列： '+selectedCells[0].cellIndex);
+                var nubmer = $(this).context.innerText;
+                cellIndex = $(this).context.cellIndex;//选中数据所在第几列
+                data.push(nubmer);
+                console.log(cellIndex)   //列数
+                // console.log(cellVal)     //行
+                $("#data").text(data) ;
             }
-        }else{
-            data.push('value： '+selectedCells[0].innerText+' 列： '+selectedCells[0].cellIndex+'  行： '+(td.parentElement.rowIndex-1));
+        })
+
+    });
+    //删除样式
+    $("td").mouseup(function(e){
+        var selectedCells =  $('#tablecellsselection').tableCellsSelection('selectedCells');
+        // $.each(selectedCells, function (i, item) {
+        //     $(item).attr("selected", "true");
+        // });
+        if(3 === e.which){
+            console.log($(this).css('background-color'));
+            if ($(this).css('background-color') === "rgba(51, 122, 183, 0.2)") {
+                $(this).removeClass("tcs-selected");
+            }
         }
-        $("#data").text(data) ;
-        console.log(selectedCells);
     });
 
+    // 按住ctrl+单击事件
 
-    $("th").click(function () {
-        $(this).addClass("red");
-        console.log('哎');
-    });
-    $("h4").click(function () {
-         $(this).addClass("reds");
 
-    });
-    // //鼠标按下触发这个事件
-    // $("tbody td").mousedown(function () {
-    //
-    //
-    //     $("tbody td").mouseup(onMouseup);
-    // });
-    //
-    // function onMousemove() {
-    //     $(this).css('background-color', '#aaa');
-    // }
-    //
-    // var cellVal = parseFloat(0,10);
-    // var cellIndex = 0;
-    // function onMouseup() {
-    //     var selectedCells =  $('#tablecellsselection').tableCellsSelection('selectedCells');
-    //
-    //
-    //     console.log('value是：'+selectedCells[0].innerText+'列数 : '+selectedCells[0].cellIndex
-    //         +'行数：');
-    //
-    //   console.log(selectedCells);
-    //
-    //     $("tbody").find("td").each(function () {
-    //         if ($(this).css('background-color') == "rgba(51, 122, 183, 0.2)") {
-    //             // console.log("今晚不加班");
-    //             var nubmer = $(this).context.innerText;
-    //             // console.log(nubmer)
-    //             // data.push(nubmer);
-    //             // $("#data").text(data);
-    //             cellVal += parseFloat(nubmer,10);//cellIndex
-    //             cellIndex = $(this).context.cellIndex;//选中数据所在第几列
-    //             data.push(nubmer);
-    //             console.log(cellIndex)   //列数
-    //             console.log(cellVal)     //行
-    //             // $("#data").text(data) ;
-    //         }
-    //     })
-    // }
+    $('td').mousedown(function (e) {
+        var _this = $(this);
+        if (e.ctrlKey && e.which === 1) {
+            clearTimeout(TimeFn);
+            TimeCtrl1 = setTimeout(function () {
+                console.log('渲染');
+                $(_this).removeClass("tcs-selected");
+                $(_this).removeClass("selection");
+                clearTimeout(TimeCtrl);
+                // $(_this).attr("selected", "true");
+                $(_this).addClass("tcs-selected");
+            }, 300);
+        }
+    })
+
+     // 为单个 td 绑定点击事件   click 为开始点击事件  mouseenter 为点击松开事件
+     // $("#tablecellsselection").on("mouseenter", "td",function (e) {
+     //
+     //     //判断当前背景是不是蓝色
+     //     var parentNodeSiblings = $(this).parent().siblings();
+     //     var siblings =  $(this).siblings();
+     //     $.each(siblings, function (i, item) {
+     //        if($(item).attr("selected") === "selected"){
+     //            $(item).addClass("tcs-selected");
+     //        }else{
+     //            $(item).addClass("selection");
+     //        }
+     //     });
+     //
+     //     $.each(parentNodeSiblings, function (i, item) {
+     //         var children = $(item).children();
+     //
+     //         $.each(children, function (i, item2) {
+     //           if($(item2).attr("selected") === "selected"){
+     //               $(item2).addClass("tcs-selected");
+     //           }else{
+     //               $(item2).addClass("selection");
+     //           }
+     //         });
+     //     });
+     //     if ($(this).css('background-color') === "rgba(51, 122, 183, 0.2)") {
+     //         $(this).addClass("selection");
+
+     //         $(this).addClass("red");
+     //
+     //         $(this).css('background-color: red')
+     //     }
+     //
+     //  });
+
 
 </script>
 <!-- Place this tag in your head or just before your close body tag. -->
