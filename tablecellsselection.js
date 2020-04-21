@@ -111,9 +111,12 @@
                     .on(getEventNameWithPluginNamespace('mousedown'),onMouseDown)//.mousedown(onMouseDown)
                     //.on(getEventNameWithPluginNamespace('dragstart'),onDragStart)
                     .on(getEventNameWithPluginNamespace('mouseup'),onMouseUp);//.mouseup(onMouseUp);
+                $($table[0].ownerDocument).on(getEventNameWithPluginNamespace('click'),onOutTableClick);
 
                 //клик на документе вне таблицы
-                $($table[0].ownerDocument).on(getEventNameWithPluginNamespace('click'),onOutTableClick);
+
+
+
                 //or $table.closest(":root"); - html
                 //or $('html')
                 //or $(document)
@@ -328,10 +331,18 @@
                 }
 
                 //клик на документе вне таблицы
+                // 事件移除
                 function onOutTableClick(event){
-                    //console.log('click (out of table)');
+                     //console.log(event);
                     isMouseDown = false;
-                    if($(event.target).closest($table).length==0) deselectAll($table);
+                 //   console.log($(event.target).closest($table).length);
+                    $("#clickdiv").bind("click",function(e){
+                        if($(e.target).closest("#tables").length === 0){
+                            console.log("我爱你66")
+                            if($(event.target).closest($table).length===0) deselectAll($table);
+                        }
+                    });
+
                 }
             }
 

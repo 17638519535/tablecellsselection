@@ -32,23 +32,26 @@
             background-color: red;
         }
         .table {
-            width: 100%;
+            width: 500px;
             max-width: 100%;
             /* margin-bottom: 20px; */
         }
+        #tables {
+            width: 800px;
+            height: 800px;
+            border: 1px solid #FF0000;
+        }
     </style>
 </head>
+
 <body class="col-md-12">
     <!--<style>-->
         <!--td, th {text-align: center;}-->
         <!--.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>td {vertical-align: middle;}-->
     <!--</style>-->
-<div class="col-md-12">
-
-</div>
-
-
-<div class="col-md-5">
+<div id="clickdiv">
+<div id = "tables">
+<div class="col-md-5" >
     <div class="col-md-12">
         <h2 class="bold">After <sup><small class="text-muted">with plugin</small></sup></h2>
     </div>
@@ -127,16 +130,14 @@
         </tbody>
     </table>
 
-</div>
     <h1><input id="commit" type="button" value="确定"/> </h1>
+    <h4 >你所选结果：<p id="data"> </p>
+    </h4>
 
+</div>
+</div>
 
-    <div >
-        <h4 id="data">
-            <p > 你所选结果是</p>
-        </h4>
-    <!--<a class="github-button" href="https://github.com/likemusic/tablecellsselection" data-style="mega" data-count-href="/likemusic/tablecellsselection/stargazers" data-count-api="/repos/likemusic/tablecellsselection#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star likemusic/tablecellsselection on GitHub">Star</a>-->
-    </div>
+</div>
 
 <script>
     jQuery(document).ready(function ($) {
@@ -167,6 +168,9 @@
         })
 
     });
+
+
+
     //删除样式
     $("td").mouseup(function(e){
         var selectedCells =  $('#tablecellsselection').tableCellsSelection('selectedCells');
