@@ -1,0 +1,345 @@
+
+#ribbon: #参考地址：http://blog.didispace.com/spring-cloud-ribbon-failed-retry/，http://blog.csdn.net/dream_broken/article/details/76973834
+#  eureka:
+#    enabled: true
+#  ConnectTimeout: 1000000 #ribbon请求连接的超时时间毫秒
+#  ReadTimeout: 1000000 #请求处理的超时时间 毫秒
+#  OkToRetryOnAllOperations: true #对所有请求操作都进行重试
+#  # 每台服务器最多重试次数，但是首次调用不包括在内
+#  MaxAutoRetries: 2 #对当前服务的重试次数（第一次分配给9082的时候，如果404，则再重试MaxAutoRetries次，如果还是404，则切换到其他服务MaxAutoRetriesNextServer决定）
+#  # 最多重试多少台服务器
+#  MaxAutoRetriesNextServer: 3 #切换服务的次数(比如本次请求分配给9082处理，发现404，则切换分配给9081处理，如果还是404，则返回404给客户端）
+#
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 1200000 #Hystrix断路器的超时时间，默认是1s，断路器的超时时间需要大于ribbon的超时时间，不然不会触发重试。
+#      timeout:
+#        enable: true ##Hystrix是否启用超时时间
+
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    serviceUrl:
+#      defaultZone: http://106.13.48.159:8080/eureka/  #注册中心地址http://106.13.48.159:8080/
+
+jhipster:
+  logging:
+    logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+      enabled: true
+      host: jhipster-logstash
+      port: 5000
+      queue-size: 512
+    spectator-metrics: # Reports Spectator Circuit Breaker metrics in the logs
+      enabled: false
+      # edit spring.metrics.export.delay-millis to set report frequency
+###################  job配置0 15 10 * * ? 2005"	 	2005年的每天上午10:15触发  ###################defaultZone: http://admin:${jhipster.registry.password}@registry.bpm.wxbiologics.com/eureka/
+jobs:
+  common_cron: 0/60 * * * * ? #间隔20秒执行一次
+  deletebarcode_cron: 0 01 14 * * ? #每天晚上1点02分开始删除barcode
+  xunjiakaibiao_cron: 0 0/120 * * * ? #间隔120分钟执行一次，询价开标
+  sendemail_cron: 0 0/10 * * * ? #间隔10分钟执行一次，发邮件
+  podeliveryplanoutdate_cron: 0 0/300 * * * ? #间隔30分钟执行一次，每半小时监测一遍是否有超期的发货执行一次
+  getSapMaterail_cron: 0 30 1 * * ? #每天1点30分执行一次,自动获取SAP物料数据开始-
+  getSapSupplier_cron: 0 10 1 * * ? #每天1点10分执行一次,自动获取SAP物料数据开始-
+  supplierCertificateOutdate_cron: 0 30 2 * * ? #每天2点30分执行一次,自动获取SAP物料数据开始-
+  bidJiebiao_cron: 0 0/60 * * * ? #每60分执行一次,自动自动截标
+  autoOpenAccountForCustomer: 0/40 * * * * ? #1点10 执行一次，发邮件 0/40 * * * * ?
+  setupReplaceOrderCustomer: 0 40 1 * * ? #间隔1分钟执行一次，发邮件
+  disabledAccountForCustomer: 0 40 2 * *  ? #间隔1分钟执行一次，发邮件
+  autoSetupSupplierMaterial: 0 40 2 * *  ? #间隔1分钟执行一次，发邮件
+  icpreport_cron: 0 40 2 * *  ? #icpreport 过期提醒
+  pointcu_cron: 0 00 3 * *  ? #间隔10分钟执行一次 点铜临界值的进行邮件发送提醒
+  pointcu_autofinish_cron: 0 0/30 * * * ? #间隔30分钟执行一次，自动结案点铜合约
+  jqh_getMaterialinfo: 0 10 3 * * ? #间隔30分钟执行一次，自动结案点铜合约 可以手工实时同步物料信息（默认当前日期2天前时间)
+  jqh_getPoinfo: 0 02 2 * * ? #间隔30分钟执行一次，自动结案点铜合约
+  jqh_getPlanProcess: 0 0 3 * * ? #间隔30分钟执行一次，自动结案点铜合约 可以手工实时同步 0 0 10,14,16 * * ? 每天上午10点，下午2点，4点
+  jqh_mes_migo: 0 0/10 * * * ? #MES收货(不用了)
+  jqh_getMigoReturn: 0 0/30 * * * ? #Migo判退数量获得
+  jqh_getZoutage: 0 0/120 * * * ? #分厂物料确认获得，每60分钟执行次
+  performanceMonth_cron: 0 30 7 * * ?
+  taskreadBiologicsEmpAndOrg_cron: 0 01 23 * * ? #每天同步一次人员数据到sp_user
+  taskClearLaboratoryDataDetail_cron: 0 01 03 * * ? #每天定时清理LaboratoryDataDetai状态88的数据
+###################  oa配置  ####################
+oa:
+  kaptcha-open: false #是否开启登录时验证码 (true/false)
+  file-upload-path: D:\upload\ #文件上传目录(不配置的话为java.io.tmpdir目录) /usr/local/jt_srm/upload/
+  file-upload-path-barcode: D:\upload\barcode\
+  auto_create_ftl_filed_path: E:\Jt-Srm\t-oa-project\t-oa-portal\src\main\resources\view #利用表单设计器生成的表单文件放置的路径开发工作目录
+  send_email_path: SYS_LDMS_ext@wuxiapptec.com
+  http_port: 8889   #当启动https安全访问时候，需要启动这个 会自动映射到8443端口
+  redirect_port: 8778  #被自动映射到端口相当于8443，一定要和server.port 8888一致
+  session-invalidate-time: 20 #session失效时间 单位：秒
+  session-validation-interval: 5 #多久检测一次失效的session 单位：秒
+  adminResource: 2
+  shiro: false
+  auto_sync_client: 1 #自动同步客户端id 对应表t_enterprise 中的auto_sync_client 字段
+  text-url: http://localhost:8777/
+  media-url: http://118.31.42.137:9999/media/
+  biologicsEmpImport_des3Password: Alihe@TT2  #BPM人员主数据 数据解密的密码
+  seq_remote_path_in: /home/ldms/seq_analysis
+  seq_remote_path_cp_in: /home/ldms/plot_cp
+  seq_remote_path_fb_in: /home/ldms/plot_fb
+  seq_remote_path_htrf_in: /home/ldms/plot_htrf
+  seq_remote_path: /home/ldms/seq_analysis/out
+  seq_remote_path_plot: /home/ldms/plot_htrf/out
+  seq_remote_path_cp: /home/ldms/plot_cp/out
+  seq_remote_path_fb: /home/ldms/plot_fb/out
+  user_domain: PHARMATECHS
+  user_account: wang_junghao
+  user_pws: Rarelay075&
+  ad: 0  # 是否需要AD认证 1 是需要 0不需要
+###################  微信配置  ###################
+weixin:
+  #微信开放平台创建的网站应用的appid
+  #  appid: wxdabb90d9f8950fb8
+  #  #微信开放平台创建的网站应用的appsecret
+  #  appsecret: a145ed15f9549fcfe38ec20d9146f579s
+  #  scope: snsapi_login
+  #微信开放平台创建的网站应用的appid
+  appid: wx21917891938224e7
+  #微信开放平台创建的网站应用的appsecret
+  appsecret: 03900d130f18ff04c43ee275981970c1
+  scope: snsapi_login
+  callBack: https://srm.mbinfocloud.com
+  rediceturl1: http://3a809d52.ngrok.io/wx/reserve/form
+  rediceturl2: http://3a809d52.ngrok.io/wx/reserve/form1
+  #微信开放平台创建的网站 设置的授权回调域
+###################  oraclejdbc配置第三方数据库  ###################
+#jdbc:
+#  driverClass: oracle.jdbc.driver.OracleDriver
+#  jdbcUrl: jdbc:oracle:thin:basis/basis@10.200.13.12:1526:PWRSDB
+#  user: basis
+#  password: basis
+###################  mysqljdbc配置第三方接口数据库 122.112.238.67 #####jt_srm2018!###########dee##2017###
+mysql_jdbc:
+  jdbcUrl: jdbc:mysql://demo.k2software.com.cn/demo.k2software.com.cn1/ldms?useUnicode=true&characterEncoding=utf-8&useSSL=true&allowMultiQueries=true
+  user: k2admin
+  password: K2pass!!
+  driverClass: com.mysql.jdbc.Driver
+###################  sql_server jdbc配置第三方接口数据库 jdbcUrl: jdbc:sqlserver://172.16.131.134:1433;DatabaseName=Dee ###################
+sqlserver_jdbc:
+  jdbcUrl: jdbc:sqlserver://10.41.23.14\UNICORN_CPS64;DatabaseName=UNICORN
+  user: LDMS
+  password: ldms@123
+  driverClass: com.microsoft.sqlserver.jdbc.SQLServerDriver
+## 无锡akta 1
+sqlserver_jdbc_1:
+  jdbcUrl: jdbc:sqlserver://10.100.62.158\UNICORN_WXCLD64;DatabaseName=UNICORN
+## 无锡akta 2
+sqlserver_jdbc_2:
+  jdbcUrl: jdbc:sqlserver://10.100.62.158\UNICORN_WXCLD70;DatabaseName=UNICORN
+#sqlserver_jdbc:
+#  jdbcUrl: jdbc:sqlserver://172.16.131.134:1433;DatabaseName=Dee
+#  user: sa
+#  password: deesql##2017
+#  driverClass: com.microsoft.sqlserver.jdbc.SQLServerDriver
+###################  sap配置  ###################
+sap:
+  sync_sap_url: http://localhost:9993/
+  sap_webservice_server_url: http://localhost:9993/
+  #  sap_host: 172.16.0.215
+  #  sap_system: 00
+  #  sap_client: 900
+  #  sap_user: RFCUSER
+  #  sap_pwd: RFCUSER01
+  #  sap_lang: zh
+  #  sap_router: /H/122.112.255.208/H/
+  sap_host: 172.16.0.213
+  sap_system: 00
+  sap_client: 601
+  sap_user: sit001
+  sap_pwd: 1qazxsW2@
+  sap_lang: zh
+  sap_router: /H/122.112.255.208/H/
+####################  项目启动端口  ################### keystore.p12 111111  mbsrmhub.top ssl 密码13NKfp86
+server:
+  # display-name: mb-srm
+  #  port: 9001
+  port: 8778
+    #  ssl:
+    #    key-store: classpath:ldms_and_key.p12
+    #    key-store-password: ldms
+  #    keyStoreType: pkcs12
+  #keyAlias: alias
+  tomcat:
+    remote_ip_header: x-forwarded-for
+    uri-encoding: UTF-8
+  use-forward-headers: true
+  error:
+    whitelabel:
+      enabled: false
+  compression:
+    min-response-size: 5120 #压缩文件最小大小(kb)
+    enabled: true #是否压缩
+    mime-types: text/html,text/css,text/javascript,application/javascript,image/gif,image/png,image/jpg #要压缩的文件格式
+#Ngnix接着再配置tomcat。基于spring-boot开发时只需在application.properties中进行配置：
+###################  spring配置 mailfxcchx412520 ###################
+spring:
+  servlet:
+    multipart:
+      max-file-size: 20MB # 单个文件大小
+      max-request-size: 100MB # 设置总上传的数据大小
+      enabled: true #开启
+  mail:
+    host: outlook.wuxiapptec.com
+    username: SYS_LDMS_ext@wuxiapptec.com    #feng_xiaochun_ext@wuxiapptec.com K2pass!!
+    password: Mf+w@H12
+  #    properties: feng_xiaochun_ext@wuxiapptec.com / #e*65cAA@
+  #          mail:
+  #            smtp:
+  #              auth: true
+  #              starttls:
+  #                enable: true
+  #                required: true
+  aop:
+    proxy-target-class: true
+  mvc:
+    static-path-pattern: /static/**
+    view:
+      prefix: /view/
+      suffix: .ftl
+  freemarker:
+    template-loader-path: classpath:/view/, classpath:/templates/*
+    cache: false
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    converters:
+      preferred-json-mapper: fastjson
+    #  multipart:
+    #   max-request-size: 100MB #最大请求大小
+  #    max-file-size: 100MB #最大文件大小
+  application:
+    name: TOA-Protal
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources,classpath:/static/,classpath:/public/,file:${oa.file-upload-path}
+    chain:
+      cache: true
+      #gzipped: true
+    # cache-period: 60
+
+  redis:
+    # Redis数据库索引（默认为0）
+    database: 0
+    # Redis服务器地址
+    host: 127.0.0.1
+    # Redis服务器连接端口
+    port: 6379
+    # 连接池配置
+    jedis:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 80
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 80
+        # 连接池中的最小空闲连接
+        min-idle: 0
+    # 连接超时时间（毫秒）220.248.34.166 122.112.238.67:3306 华为云服务器 jt_srm2018! 122.112.238.67  jt_srm2018! 172.16.0.200  //k2-- 220.248.34.166
+    timeout: 8000
+  datasource:
+    url: jdbc:mysql://demo.k2software.com.cn:33306/LDMS?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    #    url: jdbc:mysql://demo.k2software.com.cn:33306/ldms_back?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: k2admin
+    password: K2pass!!
+    #    url: jdbc:mysql://10.248.5.3:3306/ldms?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    #    username: root
+    #    password: K2pass!
+    #    url: jdbc:mysql://10.248.5.3:3306/ldms_prd?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    #    username: root
+    #    password: K2pass!
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    # druid 配置
+    druid:
+      #初始化连接大小
+      initialSize: 2
+      #最小空闲连接数
+      minIdle: 3
+      #最大连接数
+      maxActive: 4
+      WebStatFilter:
+        enabled: false
+  activiti:
+    async-executor-activate: true
+    check-process-definitions: false
+    jpaEnabled: false
+###################  mybatis-plus配置  ###################
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  typeAliasesPackage: com.jtech.**.**.domain
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID"; 10.41.23.14\UNICORN_CPS64
+    id-type: 2
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    #序列接口实现类配置
+    #key-generator: com.baomidou.springboot.xxx
+    #逻辑删除配置
+    logic-delete-value: 1
+    logic-not-delete-value: 0
+    #自定义填充策略接口实现
+    #meta-object-handler: com.baomidou.springboot.xxx
+    #自定义SQL注入器
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true #配置的缓存的全局开关
+    cachePrepStmts: true
+    lazyLoadingEnabled: true #延时加载的开关
+    multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
+logging:
+  file: /data/nfs/upload/ldms-portal.log
+  level:
+    com.jtech.toa: debug
+    root: info
+
+qiaqia:
+  registerUrl: http://192.168.196.254:8888/
+  oa:
+    webservice:
+      wsdl: http://192.168.14.80:8888/seeyon/services/srmPurchaseQeqServices?wsdl
+      reveiveXunjiaResult: receivePurchaseResult
+
+# war包部署指定ctx为常量
+war:
+  context-path: /srm
+
+common:
+  file:
+    root: D:\common\file\root\
+
+syncData:
+  srmauthuser: sync_srm_user
+  srmauthpassword: srm_!@#_root
+  #测试
+  user: posuser
+  password: a12345678
+  productCallBackUrl: http://10.3.129.7:50000/RESTAdapter/v1_0/CMC/FB
+  supplierCallBackUrl: http://10.3.129.7:50000/RESTAdapter/v1_0/MDC/FB
+  categoryCallBackUrl: http://10.3.129.7:50000/RESTAdapter/v1_0/MDC/FB
+  financeRebateUrl: http://10.3.129.7:50000/RESTAdapter/v1_0/SCC/BD
+  financeRebateCallBackUrl: http://10.3.129.7:50000/RESTAdapter/v1_0/SCC/FB
+
+csrfFilter:
+  open: false
+
+gtPush:
+  appId: false
+  appKey:
+  masterSecret:
+  url: http://sdk.open.api.igexin.com/apiex.htm
