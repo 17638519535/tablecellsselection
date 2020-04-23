@@ -335,7 +335,6 @@
                 function onOutTableClick(event){
                      //console.log(event);
                     isMouseDown = false;
-                 //   console.log($(event.target).closest($table).length);
                     $("#clickdiv").bind("click",function(e){
                         if($(e.target).closest("#tables").length === 0){
                             console.log("我爱你66")

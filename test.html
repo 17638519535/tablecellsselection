@@ -20,19 +20,14 @@
 
 
 
-    <script src="jquery-2.1.4.min.js"></script>
+    <script src="jquery-3.1.1.min.js"></script>
 
     <script src="tablecellsselection.js"></script>
     <link rel="stylesheet" href="tablecellsselection.css">
     <style type="text/css">
-        .red{
-            background-color: transparent;
-        }
-        .reds{
-            background-color: red;
-        }
+
         .table {
-            width: 500px;
+            width: 600px;
             max-width: 100%;
             /* margin-bottom: 20px; */
         }
@@ -174,9 +169,7 @@
     //删除样式
     $("td").mouseup(function(e){
         var selectedCells =  $('#tablecellsselection').tableCellsSelection('selectedCells');
-        // $.each(selectedCells, function (i, item) {
-        //     $(item).attr("selected", "true");
-        // });
+
         if(3 === e.which){
             console.log($(this).css('background-color'));
             if ($(this).css('background-color') === "rgba(51, 122, 183, 0.2)") {
@@ -197,46 +190,12 @@
                 $(_this).removeClass("tcs-selected");
                 $(_this).removeClass("selection");
                 clearTimeout(TimeCtrl);
-                // $(_this).attr("selected", "true");
+
                 $(_this).addClass("tcs-selected");
             }, 300);
         }
     })
 
-     // 为单个 td 绑定点击事件   click 为开始点击事件  mouseenter 为点击松开事件
-     // $("#tablecellsselection").on("mouseenter", "td",function (e) {
-     //
-     //     //判断当前背景是不是蓝色
-     //     var parentNodeSiblings = $(this).parent().siblings();
-     //     var siblings =  $(this).siblings();
-     //     $.each(siblings, function (i, item) {
-     //        if($(item).attr("selected") === "selected"){
-     //            $(item).addClass("tcs-selected");
-     //        }else{
-     //            $(item).addClass("selection");
-     //        }
-     //     });
-     //
-     //     $.each(parentNodeSiblings, function (i, item) {
-     //         var children = $(item).children();
-     //
-     //         $.each(children, function (i, item2) {
-     //           if($(item2).attr("selected") === "selected"){
-     //               $(item2).addClass("tcs-selected");
-     //           }else{
-     //               $(item2).addClass("selection");
-     //           }
-     //         });
-     //     });
-     //     if ($(this).css('background-color') === "rgba(51, 122, 183, 0.2)") {
-     //         $(this).addClass("selection");
-
-     //         $(this).addClass("red");
-     //
-     //         $(this).css('background-color: red')
-     //     }
-     //
-     //  });
 
 
 </script>
