@@ -133,7 +133,12 @@
     <h1><input id="commit" type="button" value="确定"/> </h1>
     <h4 >你所选结果：<p id="data"> </p>
     </h4>
+    <div style="width: 700px;height: 150px;border: 1px solid red;
+    overflow: hidden; //解决子级浮动撑开问题
+">
+        <p><span>你</span> <span style=" position: relative;right: 20px;    left: 520px;" onclick="buttsion()">她</span><span ><input style="padding-left: 4px; margin-left: 500px;width: 150px;" type="text"/></span></p>
 
+   <p>haha</p> </div>
 </div>
 </div>
 
@@ -169,7 +174,9 @@
 
     });
 
-
+   function buttsion(){
+       conosle.log('你是');
+   }
 
     //删除样式
     $("td").mouseup(function(e){
