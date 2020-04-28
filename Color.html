@@ -6,8 +6,30 @@
 </head>
 <body>
 　　<input type="color" name="color" id="color" onchange="changeColor()">
-<span id="colorInfo"></span>
+     <span onclick="addData()" id="colorInfo"></span>
+     <table style="border: 1px solid chartreuse" class="layui-table" lay-skin="line" id="datas">
+    <colgroup>
+        <col width="150">
+        <col width="200">
+        <col>
+    </colgroup>
+    <thead>
+    <tr>
+        <th>昵称</th>
+        <th>加入时间</th>
+        <th>签名</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="template">
+        <td id="id"></td>
+        <td id="url"></td>
+        <td id="title"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
+<script src="jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
     var color = document.getElementById("color"); 　　      　　　　　　　　//通过使用 getElementById() 来访问 <color> 元素
     var colorInfo = document.getElementById("colorInfo");
@@ -16,6 +38,64 @@
     function changeColor(){ 　　　　　　　　　　　　　　　　　　　　 //改变颜色的事件
         colorInfo.style.color = color.value;
         colorInfo.innerHTML = color.value;
+    }
+    function addData() {
+        var data = [{
+            "id": 1,
+            "url": "http://www.jqcool.net",
+            "switch": 1,
+            "order": 1,
+            "pid": 0,
+            "title": "Online Program knowledge share and study platform"
+        },
+            {
+                "id": 2,
+                "url": "http://www.baidu.com",
+                "switch": 0,
+                "order": 2,
+                "pid": 2,
+                "title": "这是测试的数数据这是测试的数数据"
+            },
+            {
+                "id": 3,
+                "url": "http://www.taobao.com",
+                "switch": 0,
+                "order": 3,
+                "pid": 2,
+                "title": "淘宝购物"
+            },
+            {
+                "id": 4,
+                "url": "http://www.jqcool.net1",
+                "switch": 1,
+                "order": 4,
+                "pid": 2,
+                "title": "Online Program knowledge share and study platform2"
+            },
+            {
+                "id": 5,
+                "url": "http://www.baidu.com1",
+                "switch": 0,
+                "order": 5,
+                "pid": 2,
+                "title": "这是测试的数数据2"
+            },
+            {
+                "id": 6,
+                "url": "http://www.taobao.com1",
+                "switch": 1,
+                "order": 6,
+                "pid": 0,
+                "title": "淘宝购物2"
+            }];
+        $.each(data, function (i, n) {
+            var row = $("#template").clone();
+            row.find("#id").text(n.id);
+            row.find("#url").text(n.url);
+            row.find("#title").text(n.title);
+            row.appendTo("#datas");//添加到模板的容器中
+        });
+
     }
 </script>
 </html>
