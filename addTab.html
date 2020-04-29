@@ -62,8 +62,31 @@
     function delTr2(){
         delTr('ckb');
     }
+    $("#addData").click(function () {
+
+    })
+function fas() {
+
+    $('.typeStyle').find("td").each(function (index,domEle){
+        $('.typeStyle').find("td").eq(index).prepend(" <p style=\"border: 1px solid red\">1</p>\n" +
+            "               <p style=\"border: 1px solid red\">2</p>\n" +
+            "               <p style=\"border: 1px solid red\">3</p>");
+       console.log(index)
+    });
+
+ // console.log("123")
+ //    console.log("你说");
+ //    $(".typeStyle").find("td").each(function () {
+ //        console.log("9")
+ //        console.log($(this).val());
+ //        this.prepend(" <p style=\"border: 1px solid red\">1</p>\n" +
+ //            "               <p style=\"border: 1px solid red\">2</p>\n" +
+ //            "               <p style=\"border: 1px solid red\">3</p>");
+ //    });
+}
 </script>
 </head>
+<h2 id="addData" onclick="fas()">开始吧</h2>
     <input  type="color" name="color" id="cp1" >
 
 
@@ -80,12 +103,27 @@
            <td width="30%">科目</td>
            <td width="30%">成绩</td>
        </tr>
+
 <!--    <tr align="center">-->
 <!--        <td width="30%"></td>-->
 <!--        <td width="30%">语文</td>-->
 <!--        <td width="30%">80</td>-->
 <!--    </tr>-->
+</table >
+<table border="1px #ooo" class="typeStyle">
+
+       <tr>
+           <td></td>
+           <td></td>
+           <td></td>
+       </tr>
+    <tr align="center">
+        <td width="30%"><input type="checkbox"/></td>
+        <td width="30%">科目</td>
+        <td width="30%">成绩</td>
+    </tr>
 </table>
+
 <input type="button" onclick="addTr2('tab', -1)" value="添加">
 <input type="button" onclick="delTr2()" value="删除">
 </body>
