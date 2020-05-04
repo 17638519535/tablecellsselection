@@ -55,22 +55,19 @@
     <div class="col-md-12">
         <h2 class="bold">After <sup><small class="text-muted">with plugin</small></sup></h2>
     </div>
-    <thead>
-    <table style="margin: 0px" class="table table-bordered" summary="Table selection with plugin">
 
-    <tr>
-        <th>table</th>
-        <th>Column 1</th>
-        <th>Column 2</th>
-        <th>Column 3</th>
-        <th>Column 4</th>
-        <th>Column 5</th>
-        <th>Column 6</th>
-    </tr>
-    </table>
-    <table style="margin-bottom: 0px" class="table table-bordered" summary="Table selection with plugin" id="tablecellsselection">
 
-        </thead>
+    <table style="margin-bottom: 0px" class="table table-bordered table1" summary="Table selection with plugin" id="tablecellsselection">
+        <tr>
+            <th>all</th>
+            <th>Column 1</th>
+            <th>Column 2</th>
+            <th>Column 3</th>
+            <th>Column 4</th>
+            <th>Column 5</th>
+            <th>Column 6</th>
+        </tr>
+
         <tbody>
         <tr>
             <th>A</th>
@@ -119,18 +116,19 @@
             <td>$30</td>
         </tr>
         <tr>
-            <th>F</th>
-            <td>$31</td>
-            <td>$32</td>
-            <td>$33</td>
-            <td>$34</td>
-            <td>$35</td>
-            <td>$36</td>
+
         </tr>
+
         </tbody>
     </table>
 
-    <h1><input id="commit" type="button" value="确定"/> </h1>
+    <h1>
+        <input id="commit" type="button" value="确定"/>
+        <input id="commit1" type="button" value="6孔"/>
+        <input id="commit2" type="button" value="12孔"/>
+        <input id="commit3" type="button" value="24孔"/>
+    </h1>
+
     <h4 >你所选结果：<p id="data"> </p>
     </h4>
     <div style="width: 700px;height: 150px;border: 1px solid red;
@@ -156,7 +154,54 @@
     var TimeCtrl = null;
     var TimeCtrl1 = null;
     var data =[];
+    //点击TH默认选中
+    $(".table1 th").click(function () {
+        // 获取准确的行
+      var row=  $(this).parent().prevAll().length + 1;
+       var call=  $(this).prevAll().length + 1;//列
+             //那就是列选中
+            $(".table1").find("td").each(function () {
+              var  lie = $(this).prevAll().length + 1;
+              if(lie === call){
+                  $(this).addClass("tcs-selected");
+              }
+            })
+        $(this).siblings("td").addClass("tcs-selected");
+    })
 
+    //动态渲染表格
+    $("#commit1").click(function () {
+      $(".table1").find("tr").remove();
+        $(".table1").append("  <tr>\n" +
+            "            <th>table</th>\n" +
+            "            <th>Column 1</th>\n" +
+            "            <th>Column 2</th>\n" +
+            "            <th>Column 3</th>\n" +
+            "            <th>Column 4</th>\n" +
+            "            <th>Column 5</th>\n" +
+            "            <th>Column 6</th>\n" +
+            "            <th>Column 7</th>\n" +
+            "            <th>Column 8</th>\n" +
+            "            <th>Column 9</th>\n" +
+            "        </tr>");
+        var td = "   <tr>\n" +
+            "            <th>F</th>\n" +
+            "            <td>$31</td>\n" +
+            "            <td>$32</td>\n" +
+            "            <td>$33</td>\n" +
+            "            <td>$34</td>\n" +
+            "            <td>$35</td>\n" +
+            "            <td>$36</td>\n" +
+            "            <td>$34</td>\n" +
+            "            <td>$35</td>\n" +
+            "            <td>$36</td>\n" +
+            "        </tr>"
+     for(var i = 0;i<8;i++){
+         $(".table1").append(td);
+     }
+
+
+    });
     //确认提交
     $("#commit").click(function () {
              data =[];

@@ -605,7 +605,7 @@
         return {
             $target: $target,
             $table: $table,
-            $cell: $target.closest('td,th'),
+            $cell: $target.closest('td'),
             data: $table.data(systemSettings.dataKey)
         }
     }
