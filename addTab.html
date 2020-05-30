@@ -8,68 +8,68 @@
 
 <script src="jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
-    function Map() {
-        var struct = function(key, value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        var put = function(key, value){
-            for (var i = 0; i < this.arr.length; i++) {
-                if ( this.arr[i].key === key ) {
-                    this.arr[i].value = value;
-                    return;
-                }
-            }
-            this.arr[this.arr.length] = new struct(key, value);
-        }
-
-        var get = function(key) {
-            for (var i = 0; i < this.arr.length; i++) {
-                if ( this.arr[i].key === key ) {
-                    return this.arr[i].value;
-                }
-            }
-            return null;
-        }
-
-        var remove = function(key) {
-            var v;
-            for (var i = 0; i < this.arr.length; i++) {
-                v = this.arr.pop();
-                if ( v.key === key ) {
-                    continue;
-                }
-                this.arr.unshift(v);
-            }
-        }
-
-        var size = function() {
-            return this.arr.length;
-        }
-
-        var isEmpty = function() {
-            return this.arr.length <= 0;
-        }
-        this.arr = new Array();
-        this.get = get;
-        this.put = put;
-        this.remove = remove;
-        this.size = size;
-        this.isEmpty = isEmpty;
-    }
-    function h2s () {
-        console.log("进来了")
-        var map = new Map();
-        map.put("key","haha");
-        var data = [];
-        data.push("1");
-        data.push("2");
-        map.put("array",data);
-        // console.log(map)
-        console.log(map.get("key"))
-        console.log(map.get("array")[0])
-    }
+    // function Map() {
+    //     var struct = function(key, value) {
+    //         this.key = key;
+    //         this.value = value;
+    //     }
+    //
+    //     var put = function(key, value){
+    //         for (var i = 0; i < this.arr.length; i++) {
+    //             if ( this.arr[i].key === key ) {
+    //                 this.arr[i].value = value;
+    //                 return;
+    //             }
+    //         }
+    //         this.arr[this.arr.length] = new struct(key, value);
+    //     }
+    //
+    //     var get = function(key) {
+    //         for (var i = 0; i < this.arr.length; i++) {
+    //             if ( this.arr[i].key === key ) {
+    //                 return this.arr[i].value;
+    //             }
+    //         }
+    //         return null;
+    //     }
+    //
+    //     var remove = function(key) {
+    //         var v;
+    //         for (var i = 0; i < this.arr.length; i++) {
+    //             v = this.arr.pop();
+    //             if ( v.key === key ) {
+    //                 continue;
+    //             }
+    //             this.arr.unshift(v);
+    //         }
+    //     }
+    //
+    //     var size = function() {
+    //         return this.arr.length;
+    //     }
+    //
+    //     var isEmpty = function() {
+    //         return this.arr.length <= 0;
+    //     }
+    //     this.arr = new Array();
+    //     this.get = get;
+    //     this.put = put;
+    //     this.remove = remove;
+    //     this.size = size;
+    //     this.isEmpty = isEmpty;
+    // }
+    // function h2s () {
+    //     console.log("进来了")
+    //     var map = new Map();
+    //     map.put("key","haha");
+    //     var data = [];
+    //     data.push("1");
+    //     data.push("2");
+    //     map.put("array",data);
+    //     // console.log(map)
+    //     console.log(map.get("key"))
+    //     console.log(map.get("array")[0])
+    // }
     ////////添加一行、删除一行封装方法///////
     /**
      * 为table指定行添加一行

@@ -28,16 +28,16 @@
     </tr>
     </tbody>
 </table>
-<p >来吧</p><input  type="color" name="color" id="cp1" >
+<p onclick="addMap()" >来吧</p><input  type="color" name="color" id="cp1" >
 </body>
 <script src="jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
-    $("#cp1").colorpicker({
-
-        fillcolor:true
-
-    });
+    function addMap(){
+        var map = new Map();
+        map.set("wqe","123");
+        console.log(map)
+    }
     var color = document.getElementById("color"); 　　      　　　　　　　　//通过使用 getElementById() 来访问 <color> 元素
     var colorInfo = document.getElementById("colorInfo");
     colorInfo.style.color = color.value; 　　　　　　　　　　　　　　　　 //给<span>的字体加颜色

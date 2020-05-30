@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script type="text/javascript" src="../static/vue.js"></script>
+</head>
+<body>
+<div id="diva">
+
+    <input type="text" v-model="name">
+    <span>{{name}}</span>
+    <h3>传参数据</h3>
+    <h5 @click="responseEntity">ResponseEntity</h5>
+
+</div>
+<script>
+
+    new Vue({
+        el: '#diva', //挂载的元素
+
+        // 变量数据对象
+        data: function () {
+            return {
+                name: '',
+                password: '',
+                arraydata: [],
+                orglist: [],
+                date: '',    //当前的时间
+                msg: "你好ys",
+
+
+            }
+        },
+
+        /* 这是vue页面加载完成就执行的方法*/
+
+        mounted: function () {
+            this.$nextTick(function () {
+
+
+                //当前的时间
+                this.FullYear();
+
+            });
+        },
+
+        /*方法*/
+        methods: {
+            //ResponseEntity
+            responseEntity() {
+                console.log(name)
+                // var param = {num: "2"};
+                // $.ajax({
+                //
+                //     url: '/user/responseEntity',
+                //     type: "post",
+                //     async: "false",
+                //     dataType: "JSON",
+                //     contentType: "application/json;charset=UTF-8",
+                //     data: JSON.stringify(param),
+                // }).done(resp => {
+                //     console.log(resp);
+                //     //   console.log(resp.list1);
+                //     // console.log(resp.isSuccess);
+                // });
+            },
+
+            //当前系统时间
+            FullYear() {
+                var date = new Date();
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                if (month <= 9 && month >= 1) {
+                    month = "0" + month;
+                }
+                var mydate = date.getDate();
+                //获取当前完整日期和时间
+                var toLocaleString = date.toLocaleString();
+                console.log('完整时间' + toLocaleString);
+                this.date = toLocaleString;
+
+                console.log(year);
+                console.log(month);
+                console.log(mydate);
+
+            },
+
+
+        },
+
+
+    });
+
+
+</script>
+
+</body>
+</html>
