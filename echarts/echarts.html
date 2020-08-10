@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>
+
+    <script type="text/javascript" src="../static/ecahrs/echarts.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/element-ui@2.12.0.min.css">
+    <script type="text/javascript" src="../static/js/vue.js"></script>
+    <script type="text/javascript" src="../static/js/element-ui@2.12.0.min.js"></script>
+<!--    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>-->
+      <style>
+          .div1{
+              width: 400px;height:350px;border: 3px solid #48D1CC;    border-radius: 20px;
+              margin: 5px;
+          }
+
+      </style>
+
+</head>
+<body>
+
+<div id="divId" style="padding: 10px;width: 100%;
+    height: 100%;">
+   <el-select
+            v-model="value2"
+            multiple
+            collapse-tags
+            style="margin-left: 20px;"
+            placeholder="请选择">
+        <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+        </el-option>
+    </el-select>
+    <el-button type="primary" plain @click="blurs()">Confirm</el-button>
+
+   <table id="table">
+   </table>
+
+    </div>
+</body>
+<script type="text/javascript">
+
+    var bottomTitle=[];
+    var columnNUm=[];
+    var data=[];
+
+    jQuery(document).ready(function ($) {
+         data=  findData();
+          columnNUm = Object.keys(data[0][0]);
+        //根据属性  计算table
+        tableCalculation(columnNUm.length-1);
+        for (let i=0;i<data[0].length;i++){
+            bottomTitle.push(data[0][i].JAR);
+      }
+      let value2=['XU1'];
+       findEcahrtsSyle(bottomTitle,columnNUm,data,value2);
+    });
+    function tableCalculation(columnNUm) {
+
+        console.log("来吧展示")
+
+        let tr = "<tr>";
+        for (let i=1;i<=columnNUm;i++){
+            tr+="<td><div id=\"main"+i+"\" class=\"div1\"></div></td>";
+            if(i%4===0){
+                $("#table").append(tr+"</tr>");
+                tr="<tr>";
+            }
+            if(i===columnNUm){
+                $("#table").append(tr+"</tr>");
+
+            }
+        }
+    };
+
+
+    //鼠标离开下拉
+    function mouseleave(value2){
+        console.log(value2);
+        findEcahrtsSyle(bottomTitle,columnNUm,data,value2);
+    };
+
+
+    function findData(){
+        let data =[ [
+            {
+                JAR:'d1',
+                VCD:"1",
+                VIA:"96",
+                AVI:"2",
+                LUC:"1",
+                GLU:"2",
+                PH:"7",
+            },{
+                JAR:'d2',
+                VCD:"2",
+                VIA:"98",
+                AVI:"3",
+                LUC:"2",
+                GLU:"3",
+                PH:"7",
+            },{
+                JAR:'d3',
+                VCD:"4",
+                VIA:"97",
+                AVI:"4",
+                LUC:"3",
+                GLU:"4",
+                PH:"7",
+            },{
+                JAR:'d4',
+                VCD:"5",
+                VIA:"99",
+                AVI:"5",
+                LUC:"4",
+                GLU:"3",
+                PH:"7",
+            },{
+                JAR:'d5',
+                VCD:"7",
+                VIA:"99",
+                AVI:"2",
+                LUC:"5",
+                GLU:"6",
+                PH:"7",
+            }
+        ],[  {
+            JAR:'d1',
+            VCD:"1",
+            VIA:"96",
+            AVI:"2",
+            LUC:"1",
+            GLU:"2",
+            PH:"7",
+        },{
+            JAR:'d2',
+            VCD:"2",
+            VIA:"98",
+            AVI:"3",
+            LUC:"2",
+            GLU:"3",
+            PH:"7",
+        },{
+            JAR:'d3',
+            VCD:"4",
+            VIA:"97",
+            AVI:"4",
+            LUC:"3",
+            GLU:"4",
+            130:"7",
+        },{
+            JAR:'d4',
+            VCD:"5",
+            VIA:"99",
+            AVI:"5",
+            LUC:"4",
+            GLU:"3",
+            PH:"7",
+        },{
+            JAR:'d5',
+            VCD:"7",
+            VIA:"99",
+            AVI:"2",
+            LUC:"5",
+            GLU:"6",
+            PH:"7",
+        }]];
+        return data;
+    }
+
+    var vms = new Vue({
+        el : '#divId',
+        data : {
+            options: [{
+                value: 'XU1',
+                label: 'XU1'
+            }, {
+                value: 'XU2',
+                label: 'XU2'
+            }],
+            value2:[],
+
+        },
+        /* 这是vue页面加载完成就执行的方法*/
+        created(){
+
+
+        },
+
+        methods : {
+            blurs(){
+                mouseleave(this.value2);
+            }
+
+        }
+    });
+
+    // 基于准备好的dom，初始化echarts实例
+    function findEcahrtsSyle(bottomTitle,columnNUm,data,value2) {
+
+        for (let i=1;i<=columnNUm.length-1;i++){
+            let datas=[];
+            for (let k=0;k<value2.length;k++){
+                      let leftData=[];
+                      let object ={};
+                      for (let j=0;j<data[k].length;j++){
+                          leftData.push(data[k][j][columnNUm[i]])
+                      }
+                      object.name=value2[k];
+                      object.type='line';
+                       object.stack='总量';
+                       object.data=leftData;
+                       datas.push(object);
+                  }
+
+
+            var myChart = echarts.init(document.getElementById("main"+i));
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text:columnNUm[i],
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: value2
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: bottomTitle,
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: datas
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        }
+    }
+
+
+</script>
+</body>
+</html>
